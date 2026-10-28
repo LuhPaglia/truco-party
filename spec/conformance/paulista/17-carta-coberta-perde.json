@@ -1,0 +1,111 @@
+{
+  "name": "17-carta-coberta-perde",
+  "description": "Carta coberta vale menos que qualquer carta.",
+  "ruleSet": "paulista",
+  "options": {},
+  "setup": {
+    "dealer": 3,
+    "score": [
+      0,
+      0
+    ],
+    "vira": "7o",
+    "hands": [
+      [
+        "Qp",
+        "3c",
+        "5o"
+      ],
+      [
+        "4o",
+        "3e",
+        "5e"
+      ],
+      [
+        "5c",
+        "4c",
+        "6c"
+      ],
+      [
+        "5p",
+        "4e",
+        "Kp"
+      ]
+    ]
+  },
+  "actions": [
+    {
+      "type": "PLAY_CARD",
+      "seat": 0,
+      "card": "Qp"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 1,
+      "card": "4o"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 2,
+      "card": "5c"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 3,
+      "card": "5p"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 0,
+      "card": "3c",
+      "covered": true
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 1,
+      "card": "3e"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 2,
+      "card": "4c"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 3,
+      "card": "4e"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 1,
+      "card": "5e"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 2,
+      "card": "6c"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 3,
+      "card": "Kp"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 0,
+      "card": "5o"
+    }
+  ],
+  "expect": {
+    "phase": "handOver",
+    "score": [
+      0,
+      1
+    ],
+    "roundWinners": [
+      0,
+      1,
+      1
+    ]
+  }
+}

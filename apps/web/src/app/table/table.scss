@@ -1,0 +1,477 @@
+:host {
+  display: block;
+  // Limitado pela largura e pela altura, para a mesa caber em telas baixas.
+  --card-w: clamp(44px, min(14vw, 9dvh), 88px);
+  --card-w-sm: clamp(24px, min(7vw, 5dvh), 40px);
+  --card-w-lg: clamp(64px, min(23vw, 15dvh), 112px);
+}
+
+.table {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(64px, 1fr) minmax(0, 2.4fr) minmax(64px, 1fr);
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    'hud hud hud'
+    '. top .'
+    'left center right'
+    'me me me';
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--felt-gradient);
+  color: var(--ink-on-felt);
+}
+
+.iron {
+  background: var(--felt-gradient-iron);
+}
+
+// ——— topo ———
+
+.hud {
+  grid-area: hud;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.8rem;
+}
+
+.exit {
+  display: grid;
+  place-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: rgb(0 0 0 / 0.3);
+  color: inherit;
+  text-decoration: none;
+}
+
+truco-scoreboard {
+  justify-self: center;
+  width: min(100%, 22rem);
+}
+
+.hud-spacer {
+  width: 2.2rem;
+}
+
+// ——— adversários e parceiro ———
+
+.seat {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-width: 0;
+
+  &.top {
+    grid-area: top;
+    flex-direction: row;
+    padding-bottom: 0.3rem;
+  }
+
+  &.left {
+    grid-area: left;
+  }
+
+  &.right {
+    grid-area: right;
+  }
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  min-width: 4.2rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  background: rgb(0 0 0 / 0.35);
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: box-shadow 0.2s;
+
+  &.partner {
+    background: rgb(37 99 235 / 0.45);
+  }
+}
+
+.turn .avatar {
+  box-shadow: 0 0 0 2px var(--gold), 0 0 16px rgb(230 180 34 / 0.6);
+}
+
+.backs {
+  display: flex;
+
+  truco-card + truco-card {
+    margin-left: calc(var(--card-w-sm) * -0.55);
+  }
+}
+
+.left .backs,
+.right .backs {
+  flex-direction: column;
+
+  truco-card + truco-card {
+    margin-left: 0;
+    margin-top: calc(var(--card-w-sm) * -1);
+  }
+}
+
+.callout,
+.signal {
+  position: absolute;
+  z-index: 3;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.35);
+}
+
+.callout {
+  top: 100%;
+  background: var(--gold);
+  color: #2b1d00;
+  font-size: 1rem;
+}
+
+.callout.mine {
+  top: auto;
+  bottom: 100%;
+  left: 50%;
+  translate: -50% -0.4rem;
+}
+
+.signal {
+  left: 50%;
+  bottom: -0.2rem;
+  translate: -50% 100%;
+  background: rgb(15 23 42 / 0.85);
+  font-size: 0.72rem;
+  font-weight: 500;
+}
+
+// ——— centro ———
+
+.center {
+  grid-area: center;
+  position: relative;
+  container-type: size;
+  display: grid;
+  place-items: center;
+  min-height: 0;
+}
+
+// O centro se ajusta ao espaço livre: 3 cartas na vertical (parceiro, vira, você) e 3 na horizontal.
+.trick {
+  --tw: min(var(--card-w), 21cqh, 25cqw);
+  position: relative;
+  width: calc(var(--tw) * 3.8);
+  height: calc(var(--tw) * 4.5);
+}
+
+.slot,
+.vira {
+  --card-w: var(--tw);
+}
+
+// Vira no meio da mesa, de frente, com o monte atrás: a carta base da mão.
+.vira {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  display: grid;
+  place-items: center;
+
+  .vira-card {
+    --w: calc(var(--card-w) * 0.9);
+    z-index: 1;
+  }
+
+  .deck {
+    --w: calc(var(--card-w) * 0.9);
+    position: absolute;
+    translate: -28% -6%;
+    rotate: -8deg;
+  }
+}
+
+.slot {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+
+  &.s0 {
+    top: 84%;
+  }
+
+  &.s2 {
+    top: 16%;
+  }
+
+  &.s1 {
+    left: 86%;
+    rotate: 8deg;
+  }
+
+  &.s3 {
+    left: 14%;
+    rotate: -8deg;
+  }
+}
+
+.tag {
+  position: absolute;
+  inset: auto 0 -1.2rem;
+  font-size: 0.65rem;
+  text-align: center;
+  opacity: 0.8;
+}
+
+.status {
+  position: absolute;
+  bottom: 0.2rem;
+  margin: 0;
+  padding: 0.25rem 0.8rem;
+  border-radius: 999px;
+  background: rgb(0 0 0 / 0.3);
+  font-size: 0.8rem;
+}
+
+// ——— jogador ———
+
+.me {
+  grid-area: me;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.8rem max(0.9rem, env(safe-area-inset-bottom));
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.6rem;
+}
+
+.hand {
+  display: flex;
+  justify-content: center;
+  gap: clamp(0.3rem, 2vw, 0.9rem);
+}
+
+.hand-card {
+  padding: 0;
+  border: 0;
+  background: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    translate 0.15s,
+    filter 0.15s;
+
+  &:disabled {
+    cursor: default;
+    filter: brightness(0.82);
+  }
+
+  &:not(:disabled):hover,
+  &:not(:disabled):focus-visible {
+    translate: 0 -10px;
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 3px;
+  }
+}
+
+.me.turn .hand-card:not(:disabled) {
+  filter: drop-shadow(0 0 8px rgb(230 180 34 / 0.55));
+}
+
+.covering .hand-card:not(:disabled) {
+  filter: grayscale(0.6) brightness(0.9);
+}
+
+// ——— botões, avisos e diálogos ———
+
+.btn {
+  padding: 0.65rem 1.2rem;
+  border: 0;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.25);
+
+  &.accept {
+    background: #22c55e;
+    color: #052e14;
+  }
+
+  &.raise {
+    background: var(--gold);
+    color: #2b1d00;
+    font-size: 1.05rem;
+    letter-spacing: 0.03em;
+  }
+
+  &.run {
+    background: #ef4444;
+    color: #fff;
+  }
+
+  &.ghost {
+    background: rgb(0 0 0 / 0.3);
+    color: inherit;
+    box-shadow: none;
+
+    &.active {
+      outline: 2px solid var(--gold);
+    }
+  }
+}
+
+.toast {
+  position: absolute;
+  z-index: 5;
+  // Sobre a área da mão (que está vazia no fim da mão), para não esconder a última rodada.
+  left: 50%;
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  translate: -50% 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  width: min(90vw, 20rem);
+  padding: 1rem;
+  border-radius: 1rem;
+  background: rgb(10 30 20 / 0.92);
+  text-align: center;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.45);
+
+  strong {
+    font-size: 1.2rem;
+  }
+
+  .btn {
+    margin-top: 0.4rem;
+  }
+}
+
+.overlay {
+  position: absolute;
+  z-index: 10;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgb(0 0 0 / 0.55);
+}
+
+.panel {
+  width: min(100%, 26rem);
+  padding: 1.4rem;
+  border-radius: 1.2rem;
+  background: #10281b;
+  text-align: center;
+  box-shadow: 0 16px 40px rgb(0 0 0 / 0.5);
+
+  h2 {
+    margin: 0 0 0.4rem;
+    font-family: Georgia, serif;
+  }
+
+  p {
+    margin: 0.3rem 0;
+    opacity: 0.85;
+  }
+
+  &.won h2 {
+    color: var(--gold);
+  }
+}
+
+.final {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.reveal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1rem 0;
+
+  small {
+    display: block;
+    margin-bottom: 0.3rem;
+    opacity: 0.75;
+  }
+}
+
+.row {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.panel-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+// ——— animações (animate.enter) ———
+
+.deal-in {
+  animation: deal-in 0.28s ease-out;
+}
+
+.pop {
+  animation: pop 0.25s ease-out;
+}
+
+@keyframes deal-in {
+  from {
+    opacity: 0;
+    scale: 0.7;
+  }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    scale: 0.6;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .deal-in,
+  .pop {
+    animation: none;
+  }
+}
+
+// Celular deitado / telas baixas: cartas menores.
+@media (max-height: 520px) {
+  :host {
+    --card-w: 48px;
+    --card-w-sm: 24px;
+    --card-w-lg: 64px;
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "name": "10-mesma-dupla-nao-aumenta-duas-vezes",
+  "description": "Quem pediu por último não pode pedir de novo até a outra dupla aumentar.",
+  "ruleSet": "paulista",
+  "options": {},
+  "setup": {
+    "dealer": 3,
+    "score": [
+      0,
+      0
+    ],
+    "vira": "3o",
+    "hands": [
+      [
+        "4p",
+        "5o",
+        "6o"
+      ],
+      [
+        "3c",
+        "2c",
+        "Ac"
+      ],
+      [
+        "5e",
+        "6e",
+        "7e"
+      ],
+      [
+        "3e",
+        "2e",
+        "Ae"
+      ]
+    ]
+  },
+  "actions": [
+    {
+      "type": "RAISE",
+      "seat": 0
+    },
+    {
+      "type": "ACCEPT",
+      "seat": 1
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 0,
+      "card": "4p"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 1,
+      "card": "3c"
+    },
+    {
+      "type": "RAISE",
+      "seat": 2,
+      "expectError": true
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 2,
+      "card": "5e"
+    },
+    {
+      "type": "RAISE",
+      "seat": 3
+    }
+  ],
+  "expect": {
+    "phase": "betPending",
+    "currentSeat": 3,
+    "value": 3,
+    "pendingValue": 6
+  }
+}

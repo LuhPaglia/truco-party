@@ -1,0 +1,13 @@
+{
+  "name": "Truco Party",
+  "short_name": "Truco Party",
+  "description": "Truco Paulista 2x2 contra a máquina.",
+  "lang": "pt-BR",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b3520",
+  "theme_color": "#135232",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}

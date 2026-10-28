@@ -1,0 +1,171 @@
+@let v = game.view();
+@let round = game.displayedRound();
+
+<div class="table" [class.iron]="v.special === 'ironHand'">
+  <header class="hud">
+    <a routerLink="/" class="exit" aria-label="Sair da mesa">✕</a>
+    <truco-scoreboard
+      [score]="v.score"
+      [gamesWon]="v.gamesWon"
+      [bestOf3]="v.options.format === 'bestOf3'"
+      [value]="v.value"
+      [rounds]="roundOutcomes()"
+      [manilha]="manilhaRank()"
+    />
+    <span class="hud-spacer" aria-hidden="true"></span>
+  </header>
+
+  @for (o of opponents; track o.seat) {
+    <section class="seat" [class]="'seat ' + o.area" [class.turn]="isTurn(o.seat)">
+      <div class="avatar" [class.partner]="o.seat === 2">
+        <span>{{ seatNames[o.seat] }}</span>
+      </div>
+      <div class="backs" aria-label="{{ v.cardsInHand[o.seat] }} cartas">
+        @for (i of range(v.cardsInHand[o.seat]); track i) {
+          <truco-card size="sm" />
+        }
+      </div>
+      @if (game.callouts()[o.seat]; as text) {
+        <span class="callout" animate.enter="pop">{{ text }}</span>
+      }
+      @if (o.seat === 2 && signalText(); as signal) {
+        <span class="signal" title="Sinal do parceiro">{{ signal }}</span>
+      }
+    </section>
+  }
+
+  <section class="center">
+    <div class="trick">
+      @if (v.vira) {
+        <div class="vira" aria-live="polite">
+          <truco-card class="deck" />
+          <truco-card [card]="v.vira" class="vira-card" />
+        </div>
+      }
+      @for (play of round.plays; track play.seat) {
+        <div class="slot" [class]="'slot s' + play.seat" animate.enter="deal-in">
+          <truco-card [card]="play.card" [manilha]="isManilha(play.card)" />
+          @if (play.covered) {
+            <span class="tag">coberta</span>
+          }
+        </div>
+      }
+    </div>
+    @if (status(); as text) {
+      <p class="status" aria-live="polite">{{ text }}</p>
+    }
+  </section>
+
+  <section class="me" [class.turn]="myTurn()">
+    @if (game.callouts()[0]; as text) {
+      <span class="callout mine" animate.enter="pop">{{ text }}</span>
+    }
+
+    <div class="actions">
+      @if (mustAnswerBet()) {
+        <button type="button" class="btn accept" (click)="game.accept()">Aceitar</button>
+        @if (raiseLabel(); as label) {
+          <button type="button" class="btn raise" (click)="game.raise()">{{ label }}!</button>
+        }
+        <button type="button" class="btn run" (click)="game.run()">Correr</button>
+      } @else if (myTurn()) {
+        @if (raiseLabel(); as label) {
+          <button type="button" class="btn raise" (click)="game.raise()">{{ label }}!</button>
+        }
+        @if (canCover()) {
+          <button
+            type="button"
+            class="btn ghost"
+            [class.active]="coverNext()"
+            [attr.aria-pressed]="coverNext()"
+            (click)="coverNext.set(!coverNext())"
+          >
+            {{ coverNext() ? 'Escolha a carta para cobrir' : 'Jogar coberta' }}
+          </button>
+        }
+      }
+    </div>
+
+    <div class="hand" [class.covering]="coverNext()">
+      @for (card of v.myCards; track cardKey(card, $index)) {
+        <button
+          type="button"
+          class="hand-card"
+          [disabled]="!myTurn()"
+          [attr.aria-label]="card ? 'Jogar carta' : 'Jogar carta escondida'"
+          (click)="play($index)"
+        >
+          <truco-card [card]="card" [manilha]="isManilha(card)" size="lg" />
+        </button>
+      }
+    </div>
+  </section>
+
+  @if (v.phase === 'elevenDecision' && v.elevenTeam === 0) {
+    <div class="overlay" role="dialog" aria-modal="true" aria-labelledby="eleven-title">
+      <div class="panel">
+        <h2 id="eleven-title">Mão de onze</h2>
+        <p>Vocês estão com 11. Jogar vale 3 pontos; correr dá 1 ponto para eles.</p>
+        <div class="reveal">
+          <div>
+            <small>Suas cartas</small>
+            <div class="row">
+              @for (card of v.myCards; track $index) {
+                <truco-card [card]="card" [manilha]="isManilha(card)" />
+              }
+            </div>
+          </div>
+          @if (v.partnerCards; as partner) {
+            <div>
+              <small>Parceiro</small>
+              <div class="row">
+                @for (card of partner; track $index) {
+                  <truco-card [card]="card" [manilha]="isManilha(card)" />
+                }
+              </div>
+            </div>
+          }
+        </div>
+        <div class="panel-actions">
+          <button type="button" class="btn accept" (click)="game.elevenPlay()">Jogar (vale 3)</button>
+          <button type="button" class="btn run" (click)="game.elevenRun()">Correr</button>
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (v.phase === 'handOver' && resultText(); as r) {
+    <div class="toast" role="status">
+      <strong>{{ r.title }}</strong>
+      <span>{{ r.detail }}</span>
+      <button type="button" class="btn accept" (click)="game.nextHand()">Próxima mão</button>
+    </div>
+  }
+
+  @if (v.phase === 'gameOver' || v.phase === 'matchOver') {
+    @let usWon = v.phase === 'matchOver' ? v.matchWinner === 0 : (v.result?.winner === 0);
+    <div class="overlay" role="dialog" aria-modal="true" aria-labelledby="end-title">
+      <div class="panel end" [class.won]="usWon">
+        <h2 id="end-title">
+          @if (v.phase === 'matchOver') {
+            {{ usWon ? 'Vocês venceram! 🎉' : 'Eles venceram' }}
+          } @else {
+            {{ usWon ? 'Partida para vocês!' : 'Partida para eles' }}
+          }
+        </h2>
+        <p class="final">{{ v.score[0] }} × {{ v.score[1] }}</p>
+        @if (v.options.format === 'bestOf3') {
+          <p>Partidas: {{ v.gamesWon[0] }} × {{ v.gamesWon[1] }}</p>
+        }
+        <div class="panel-actions">
+          @if (v.phase === 'gameOver') {
+            <button type="button" class="btn accept" (click)="game.nextGame()">Próxima partida</button>
+          } @else {
+            <button type="button" class="btn accept" (click)="game.rematch()">Jogar de novo</button>
+          }
+          <a routerLink="/" class="btn ghost">Menu</a>
+        </div>
+      </div>
+    </div>
+  }
+</div>

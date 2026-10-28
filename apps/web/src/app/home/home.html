@@ -1,0 +1,69 @@
+<main class="home">
+  <header class="brand">
+    <span class="suits" aria-hidden="true">♣ ♥ ♠ ♦</span>
+    <h1>Truco <span>Party</span></h1>
+    <p>2 contra 2 · você e seu parceiro contra a mesa</p>
+  </header>
+
+  <section aria-labelledby="mode-title">
+    <h2 id="mode-title">Modalidade</h2>
+    <div class="choices modes">
+      @for (mode of modes; track mode.id) {
+        <button
+          type="button"
+          class="choice"
+          [class.selected]="settings().ruleSetId === mode.id"
+          [disabled]="!mode.available"
+          [attr.aria-pressed]="settings().ruleSetId === mode.id"
+          (click)="selectMode(mode.id)"
+        >
+          {{ mode.label }}
+          @if (!mode.available) {
+            <small>Em breve</small>
+          }
+        </button>
+      }
+    </div>
+  </section>
+
+  <section aria-labelledby="difficulty-title">
+    <h2 id="difficulty-title">Dificuldade</h2>
+    <div class="choices segmented">
+      @for (d of difficulties; track d.id) {
+        <button
+          type="button"
+          class="choice"
+          [class.selected]="settings().difficulty === d.id"
+          [disabled]="!d.available"
+          [attr.aria-pressed]="settings().difficulty === d.id"
+          (click)="selectDifficulty(d.id)"
+        >
+          {{ d.label }}
+          @if (!d.available) {
+            <small>Em breve</small>
+          }
+        </button>
+      }
+    </div>
+  </section>
+
+  <details class="rules">
+    <summary>Regras da mesa</summary>
+    <ul>
+      @for (rule of rules; track rule.key) {
+        <li>
+          <label>
+            <input type="checkbox" [checked]="isOn(rule)" (change)="toggle(rule, $any($event.target).checked)" />
+            <span>
+              <strong>{{ rule.label }}</strong>
+              <small>{{ rule.hint }}</small>
+            </span>
+          </label>
+        </li>
+      }
+    </ul>
+    <button type="button" class="link" (click)="resetRules()">Voltar ao padrão</button>
+  </details>
+
+  <button type="button" class="play" (click)="start()">Jogar</button>
+</main>

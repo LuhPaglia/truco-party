@@ -1,0 +1,89 @@
+{
+  "name": "02-ordem-dos-naipes-das-manilhas",
+  "description": "Manilhas: paus > copas > espadas > ouros.",
+  "ruleSet": "paulista",
+  "options": {},
+  "setup": {
+    "dealer": 3,
+    "score": [
+      0,
+      0
+    ],
+    "vira": "Ko",
+    "hands": [
+      [
+        "Ao",
+        "4o",
+        "6o"
+      ],
+      [
+        "Ae",
+        "5e",
+        "6e"
+      ],
+      [
+        "Ac",
+        "5c",
+        "6c"
+      ],
+      [
+        "Ap",
+        "3p",
+        "6p"
+      ]
+    ]
+  },
+  "actions": [
+    {
+      "type": "PLAY_CARD",
+      "seat": 0,
+      "card": "Ao"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 1,
+      "card": "Ae"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 2,
+      "card": "Ac"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 3,
+      "card": "Ap"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 3,
+      "card": "3p"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 0,
+      "card": "4o"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 1,
+      "card": "5e"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 2,
+      "card": "5c"
+    }
+  ],
+  "expect": {
+    "phase": "handOver",
+    "score": [
+      0,
+      1
+    ],
+    "roundWinners": [
+      1,
+      1
+    ]
+  }
+}

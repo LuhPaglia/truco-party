@@ -1,0 +1,58 @@
+{
+  "name": "08-truco-corrido",
+  "description": "Correu do truco: quem pediu ganha o valor anterior (1). Qualquer jogador da dupla pode responder.",
+  "ruleSet": "paulista",
+  "options": {},
+  "setup": {
+    "dealer": 3,
+    "score": [
+      0,
+      0
+    ],
+    "vira": "3o",
+    "hands": [
+      [
+        "4p",
+        "5o",
+        "6o"
+      ],
+      [
+        "3c",
+        "2c",
+        "Ac"
+      ],
+      [
+        "5e",
+        "6e",
+        "7e"
+      ],
+      [
+        "3e",
+        "2e",
+        "Ae"
+      ]
+    ]
+  },
+  "actions": [
+    {
+      "type": "RAISE",
+      "seat": 0
+    },
+    {
+      "type": "RUN",
+      "seat": 3
+    }
+  ],
+  "expect": {
+    "phase": "handOver",
+    "score": [
+      1,
+      0
+    ],
+    "result": {
+      "winner": 0,
+      "points": 1,
+      "reason": "run"
+    }
+  }
+}

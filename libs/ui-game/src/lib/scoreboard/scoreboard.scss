@@ -1,0 +1,79 @@
+:host {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  background: rgb(0 0 0 / 0.35);
+  color: var(--ink-on-felt, #f3efe2);
+  font-family: system-ui, sans-serif;
+}
+
+.team {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+.them {
+  justify-content: flex-end;
+}
+
+.name {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.8;
+}
+
+.points {
+  font-size: 1.5rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.games {
+  color: var(--gold, #e6b422);
+  font-size: 0.7rem;
+}
+
+.hand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.value {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--gold, #e6b422);
+  white-space: nowrap;
+}
+
+.rounds {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  border: 1px solid rgb(255 255 255 / 0.5);
+}
+
+.won {
+  background: #4ade80;
+  border-color: #4ade80;
+}
+
+.lost {
+  background: #f87171;
+  border-color: #f87171;
+}
+
+.tie {
+  background: #cbd5e1;
+  border-color: #cbd5e1;
+}

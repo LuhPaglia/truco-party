@@ -1,0 +1,62 @@
+{
+  "name": "09-pede-seis-e-corre",
+  "description": "Pedir seis aceita o truco; correr do seis entrega 3 pontos.",
+  "ruleSet": "paulista",
+  "options": {},
+  "setup": {
+    "dealer": 3,
+    "score": [
+      0,
+      0
+    ],
+    "vira": "3o",
+    "hands": [
+      [
+        "4p",
+        "5o",
+        "6o"
+      ],
+      [
+        "3c",
+        "2c",
+        "Ac"
+      ],
+      [
+        "5e",
+        "6e",
+        "7e"
+      ],
+      [
+        "3e",
+        "2e",
+        "Ae"
+      ]
+    ]
+  },
+  "actions": [
+    {
+      "type": "RAISE",
+      "seat": 0
+    },
+    {
+      "type": "RAISE",
+      "seat": 1
+    },
+    {
+      "type": "RUN",
+      "seat": 2
+    }
+  ],
+  "expect": {
+    "phase": "handOver",
+    "score": [
+      0,
+      3
+    ],
+    "result": {
+      "winner": 1,
+      "points": 3,
+      "reason": "run"
+    }
+  }
+}

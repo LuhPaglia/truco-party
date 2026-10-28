@@ -1,0 +1,55 @@
+{
+  "name": "11-mao-de-onze-correr",
+  "description": "Mão de onze: a dupla com 11 corre e o adversário ganha 1.",
+  "ruleSet": "paulista",
+  "options": {},
+  "setup": {
+    "dealer": 3,
+    "score": [
+      11,
+      5
+    ],
+    "vira": "3o",
+    "hands": [
+      [
+        "4p",
+        "5o",
+        "6o"
+      ],
+      [
+        "3c",
+        "2c",
+        "Ac"
+      ],
+      [
+        "5e",
+        "6e",
+        "7e"
+      ],
+      [
+        "3e",
+        "2e",
+        "Ae"
+      ]
+    ]
+  },
+  "actions": [
+    {
+      "type": "ELEVEN_RUN",
+      "seat": 2
+    }
+  ],
+  "expect": {
+    "phase": "handOver",
+    "score": [
+      11,
+      6
+    ],
+    "special": "elevenHand",
+    "result": {
+      "winner": 1,
+      "points": 1,
+      "reason": "elevenRun"
+    }
+  }
+}

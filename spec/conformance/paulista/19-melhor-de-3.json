@@ -1,0 +1,99 @@
+{
+  "name": "19-melhor-de-3",
+  "description": "Melhor de 3: vencer a primeira partida não encerra a disputa; o placar zera.",
+  "ruleSet": "paulista",
+  "options": {
+    "format": "bestOf3"
+  },
+  "setup": {
+    "dealer": 3,
+    "score": [
+      10,
+      0
+    ],
+    "vira": "7o",
+    "hands": [
+      [
+        "Qp",
+        "3c",
+        "5o"
+      ],
+      [
+        "4o",
+        "3e",
+        "5e"
+      ],
+      [
+        "5c",
+        "4c",
+        "6c"
+      ],
+      [
+        "5p",
+        "4e",
+        "6p"
+      ]
+    ]
+  },
+  "actions": [
+    {
+      "type": "RAISE",
+      "seat": 0
+    },
+    {
+      "type": "ACCEPT",
+      "seat": 1
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 0,
+      "card": "Qp"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 1,
+      "card": "4o"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 2,
+      "card": "5c"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 3,
+      "card": "5p"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 0,
+      "card": "3c"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 1,
+      "card": "3e"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 2,
+      "card": "4c"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 3,
+      "card": "4e"
+    }
+  ],
+  "expect": {
+    "phase": "gameOver",
+    "score": [
+      13,
+      0
+    ],
+    "gamesWon": [
+      1,
+      0
+    ]
+  }
+}

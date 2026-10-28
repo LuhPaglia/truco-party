@@ -1,0 +1,112 @@
+{
+  "name": "14-mao-de-ferro",
+  "description": "11 a 11: mão de ferro, vale 1 e não aceita truco.",
+  "ruleSet": "paulista",
+  "options": {},
+  "setup": {
+    "dealer": 3,
+    "score": [
+      11,
+      11
+    ],
+    "vira": "3o",
+    "hands": [
+      [
+        "4p",
+        "5o",
+        "6o"
+      ],
+      [
+        "3c",
+        "2c",
+        "Ac"
+      ],
+      [
+        "5e",
+        "6e",
+        "7e"
+      ],
+      [
+        "3e",
+        "2e",
+        "Ae"
+      ]
+    ]
+  },
+  "actions": [
+    {
+      "type": "RAISE",
+      "seat": 0,
+      "expectError": true
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 0,
+      "card": "4p"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 1,
+      "card": "3c"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 2,
+      "card": "5e"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 3,
+      "card": "3e"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 0,
+      "card": "5o"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 1,
+      "card": "2c"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 2,
+      "card": "6e"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 3,
+      "card": "2e"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 1,
+      "card": "Ac"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 2,
+      "card": "7e"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 3,
+      "card": "Ae"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 0,
+      "card": "6o"
+    }
+  ],
+  "expect": {
+    "phase": "matchOver",
+    "special": "ironHand",
+    "score": [
+      11,
+      12
+    ],
+    "matchWinner": 1
+  }
+}

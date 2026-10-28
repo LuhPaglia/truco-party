@@ -1,0 +1,112 @@
+{
+  "name": "06-tres-empates-ponto-para-quem-e-mao",
+  "description": "Regra opcional: três empates dão a mão para a dupla de quem é mão.",
+  "ruleSet": "paulista",
+  "options": {
+    "allRoundsTied": "firstPlayerTeam"
+  },
+  "setup": {
+    "dealer": 3,
+    "score": [
+      0,
+      0
+    ],
+    "vira": "7o",
+    "hands": [
+      [
+        "3c",
+        "2c",
+        "Ac"
+      ],
+      [
+        "3e",
+        "2e",
+        "Ae"
+      ],
+      [
+        "4c",
+        "5c",
+        "6c"
+      ],
+      [
+        "4e",
+        "5e",
+        "6e"
+      ]
+    ]
+  },
+  "actions": [
+    {
+      "type": "PLAY_CARD",
+      "seat": 0,
+      "card": "3c"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 1,
+      "card": "3e"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 2,
+      "card": "4c"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 3,
+      "card": "4e"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 0,
+      "card": "2c"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 1,
+      "card": "2e"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 2,
+      "card": "5c"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 3,
+      "card": "5e"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 0,
+      "card": "Ac"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 1,
+      "card": "Ae"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 2,
+      "card": "6c"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 3,
+      "card": "6e"
+    }
+  ],
+  "expect": {
+    "phase": "handOver",
+    "score": [
+      1,
+      0
+    ],
+    "result": {
+      "winner": 0,
+      "points": 1,
+      "reason": "allTied"
+    }
+  }
+}

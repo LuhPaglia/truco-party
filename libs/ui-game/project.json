@@ -1,0 +1,10 @@
+{
+  "name": "ui-game",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/ui-game/src",
+  "prefix": "truco",
+  "projectType": "library",
+  "tags": ["type:ui"],
+  "// targets": "to see all targets run: nx show project ui-game --web",
+  "targets": {}
+}

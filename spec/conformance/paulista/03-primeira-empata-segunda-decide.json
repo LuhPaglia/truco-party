@@ -1,0 +1,89 @@
+{
+  "name": "03-primeira-empata-segunda-decide",
+  "description": "Empatou a 1ª rodada: quem vence a 2ª leva a mão.",
+  "ruleSet": "paulista",
+  "options": {},
+  "setup": {
+    "dealer": 3,
+    "score": [
+      0,
+      0
+    ],
+    "vira": "4o",
+    "hands": [
+      [
+        "3c",
+        "7o",
+        "4c"
+      ],
+      [
+        "3e",
+        "Ke",
+        "4e"
+      ],
+      [
+        "2o",
+        "6c",
+        "4p"
+      ],
+      [
+        "2p",
+        "Qp",
+        "6p"
+      ]
+    ]
+  },
+  "actions": [
+    {
+      "type": "PLAY_CARD",
+      "seat": 0,
+      "card": "3c"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 1,
+      "card": "3e"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 2,
+      "card": "2o"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 3,
+      "card": "2p"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 0,
+      "card": "7o"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 1,
+      "card": "Ke"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 2,
+      "card": "6c"
+    },
+    {
+      "type": "PLAY_CARD",
+      "seat": 3,
+      "card": "Qp"
+    }
+  ],
+  "expect": {
+    "phase": "handOver",
+    "score": [
+      0,
+      1
+    ],
+    "roundWinners": [
+      "tie",
+      1
+    ]
+  }
+}
